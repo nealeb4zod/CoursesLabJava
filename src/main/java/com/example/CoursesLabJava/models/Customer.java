@@ -1,13 +1,12 @@
 package com.example.CoursesLabJava.models;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -25,10 +24,6 @@ public class Customer {
     @Column
     private int age;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<Booking> bookings;
-
     @JsonIgnoreProperties({"customers"})
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
@@ -45,7 +40,6 @@ public class Customer {
         this.name = name;
         this.town = town;
         this.age = age;
-        this.bookings = new ArrayList<>();
         this.courses = new ArrayList<>();
     }
 
@@ -82,18 +76,6 @@ public class Customer {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public boolean addBooking(Booking booking) {
-        return bookings.add(booking);
     }
 
     public List<Course> getCourses() {
